@@ -1,4 +1,5 @@
 ---
+image: cover-vs.jpg
 title: AI agent vs AI assistant: what actually changes for your work
 date: 2026-10-08
 description: The difference is not the model. It is who owns the steps. A practical breakdown of where assistants stop and agents begin, and how to choose.

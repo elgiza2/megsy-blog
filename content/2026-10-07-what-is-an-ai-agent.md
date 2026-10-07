@@ -1,4 +1,5 @@
 ---
+image: cover-agent.jpg
 title: What is an AI agent? A plain-English guide
 date: 2026-10-07
 description: An AI agent is not a smarter chatbot. Here is the plain difference between a tool that answers and an agent that finishes, and why it changes how you work.
