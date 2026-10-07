@@ -1,0 +1,130 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How to cut busywork with AI agents without losing control — Megsy</title>
+<meta name="description" content="A practical method for choosing what to hand to an agent, what to keep, and how to set boundaries that stop quiet failures before they reach a customer.">
+<link rel="canonical" href="https://elgiza2.github.io/megsy-blog/posts/cut-busywork-with-ai-agents.html">
+<meta property="og:type" content="article"><meta property="og:title" content="How to cut busywork with AI agents without losing control — Megsy">
+<meta property="og:description" content="A practical method for choosing what to hand to an agent, what to keep, and how to set boundaries that stop quiet failures before they reach a customer."><meta property="og:url" content="https://elgiza2.github.io/megsy-blog/posts/cut-busywork-with-ai-agents.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How to cut busywork with AI agents without losing control — Megsy"><meta name="twitter:description" content="A practical method for choosing what to hand to an agent, what to keep, and how to set boundaries that stop quiet failures before they reach a customer.">
+<link rel="alternate" type="application/rss+xml" title="Megsy Blog" href="https://elgiza2.github.io/megsy-blog/feed.xml">
+<link rel='preconnect' href='https://fonts.googleapis.com'><link rel='preconnect' href='https://fonts.gstatic.com' crossorigin><link href='https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;600;700&display=swap' rel='stylesheet'><style>
+:root{--blue:#2D6CFF;--sky:#7EB6EE;--ink:#0A0A0A;--parch:#F7F9FC;--gold:#E0B25A;--slate:#6B7A90;--line:#E4EAF2}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--ink);color:var(--parch);font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--sky);text-decoration:none}a:hover{color:var(--blue)}
+.wrap{max-width:760px;margin:0 auto;padding:0 24px}
+header.site{border-bottom:1px solid #1c1c1f;padding:22px 0;position:sticky;top:0;background:rgba(10,10,10,.92);backdrop-filter:blur(10px);z-index:9}
+header.site .wrap{display:flex;align-items:center;gap:12px}
+.logo{width:11px;height:11px;border-radius:50%;background:var(--blue);box-shadow:0 0 22px rgba(45,108,255,.85)}
+.brand{font-family:'Instrument Serif',Georgia,serif;font-size:23px;letter-spacing:.01em}
+.brand span{color:var(--slate);font-size:14px;font-family:Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;margin-left:10px}
+header.site nav{margin-left:auto;font-size:14px}
+.hero{padding:72px 0 40px}
+.hero h1{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(38px,6vw,60px);line-height:1.05;font-weight:400;letter-spacing:-.015em}
+.hero p{color:#9FB0C6;font-size:19px;margin-top:18px;max-width:600px}
+.tagline{display:inline-block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(224,178,90,.45);border-radius:100px;padding:6px 16px;margin-bottom:22px}
+ul.posts{list-style:none;padding-bottom:80px}
+ul.posts li{border-top:1px solid #1c1c1f;padding:30px 0}
+ul.posts time{font-size:13px;color:var(--slate);letter-spacing:.05em}
+ul.posts h2{font-family:'Instrument Serif',Georgia,serif;font-size:30px;font-weight:400;margin:8px 0 10px;line-height:1.2}
+ul.posts h2 a{color:var(--parch)}ul.posts h2 a:hover{color:var(--sky)}
+ul.posts p{color:#9FB0C6;font-size:16px}
+article{padding:60px 0 90px}
+article h1{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(34px,5.2vw,50px);line-height:1.1;font-weight:400;margin-bottom:14px}
+article .meta{color:var(--slate);font-size:14px;margin-bottom:36px}
+article h2{font-family:'Instrument Serif',Georgia,serif;font-size:29px;font-weight:400;margin:44px 0 14px}
+article h3{font-size:20px;margin:32px 0 10px}
+article p{margin:16px 0;font-size:18px;color:#E7EDF5}
+article ul,article ol{margin:16px 0 16px 26px;color:#E7EDF5;font-size:18px}
+article li{margin:8px 0}
+article blockquote{border-left:3px solid var(--blue);padding:6px 0 6px 20px;margin:24px 0;color:#9FB0C6;font-style:italic}
+article code{background:#161616;border:1px solid #232323;border-radius:5px;padding:2px 6px;font-size:15px}
+article pre{background:#121212;border:1px solid #232323;border-radius:12px;padding:18px;overflow:auto;margin:22px 0}
+article pre code{border:0;padding:0}
+article strong{color:#fff}
+article hr{border:0;border-top:1px solid #1c1c1f;margin:40px 0}
+.cta{margin:52px 0 0;padding:32px;border:1px solid rgba(45,108,255,.35);border-radius:18px;background:linear-gradient(160deg,rgba(45,108,255,.12),rgba(10,10,10,0))}
+.cta h3{font-family:'Instrument Serif',Georgia,serif;font-size:26px;font-weight:400;margin:0 0 10px}
+.cta p{color:#9FB0C6;margin:0 0 18px}
+.btn{display:inline-block;background:var(--blue);color:#fff;padding:12px 24px;border-radius:100px;font-weight:600;font-size:15px}
+.btn:hover{background:#4a80ff;color:#fff}
+footer{border-top:1px solid #1c1c1f;padding:34px 0;color:var(--slate);font-size:14px}
+footer a{color:var(--slate)}
+@media(max-width:600px){.hero{padding:48px 0 24px}article{padding:36px 0 60px}}
+</style></head><body>
+<header class="site"><div class="wrap"><span class="logo"></span>
+<a class="brand" href="../index.html">Megsy<span>Blog</span></a>
+<nav><a href="https://www.megsyai.com">megsyai.com &rarr;</a></nav></div></header>
+<article class="wrap"><h1>How to cut busywork with AI agents without losing control</h1>
+<div class="meta">2026-10-09 &middot; automation, workflows, AI agents</div>
+<p>Most teams adopt AI agents in the wrong order. They start with the most impressive task, hit a confident wrong answer, and conclude that agents are not ready.</p>
+
+<p>The teams that get value do the opposite: they start with the smallest, dullest, most verifiable task they have, and they expand only when the results hold.</p>
+
+<h2>Step 1: List your busywork, not your ambitions</h2>
+
+<p>Write down every task you or your team repeats weekly. Not the strategic work — the chores.</p>
+
+<p>Look for the ones that meet three conditions:</p>
+
+<ul><li><strong>Multi-step.</strong> More than two actions, otherwise it is just a query.</li>
+<li><strong>Frequent.</strong> Weekly or more, otherwise it will not pay back the setup.</li>
+<li><strong>Checkable.</strong> You can look at the output and know in seconds whether it is right.</li>
+</ul>
+<p>That third condition is the one people skip, and it is the one that matters most.</p>
+
+<h2>Step 2: Automate the check, not just the task</h2>
+
+<p>This is the step almost everyone misses.</p>
+
+<p>Before you hand a task to an agent, decide how you will know it worked. Not &quot;it looks fine&quot; — an actual signal. A number that should have moved. A file that should exist. A count that should match.</p>
+
+<p>An agent without a check is not automation. It is delegation with no accountability, and it will fail silently at the worst possible moment.</p>
+
+<h2>Step 3: Give it the smallest possible scope</h2>
+
+<p>The instinct is to grant broad access so the agent is &quot;useful&quot;. Resist it.</p>
+
+<p>Every permission you grant is a failure mode you now own. Start with read-only where possible, add write access one capability at a time, and keep anything irreversible — payments, publishing, deletions, sending to customers — behind a human.</p>
+
+<p>&gt; The question is not &quot;can the agent do this?&quot; It is &quot;what is the worst thing that happens if it does this badly?&quot;</p>
+
+<p>If the answer is &quot;we lose money or trust&quot;, keep the human in the loop.</p>
+
+<h2>Step 4: Run it on a schedule, and read the report</h2>
+
+<p>A useful pattern for a first agent: run the same job on a fixed schedule and report <strong>only what changed</strong>.</p>
+
+<p>Daily summaries get ignored. &quot;Nothing changed&quot; is a valid and valuable report. An exception report gets read.</p>
+
+<p>This is also how you build trust: after two weeks of accurate &quot;nothing to report&quot;, you will believe the one day it flags something.</p>
+
+<h2>Step 5: Expand by task, never by trust</h2>
+
+<p>When an agent proves itself, the temptation is to give it more freedom. The better move is to give it <strong>another narrow task</strong>.</p>
+
+<p>A team of small, boring, well-checked agents is more reliable than one ambitious agent with a wide remit — and far easier to debug when something drifts.</p>
+
+<h2>A realistic first month</h2>
+
+<p><strong>Week 1.</strong> Pick one chore. Write down the check. Run the agent in a read-only mode and compare its output to yours manually.</p>
+
+<p><strong>Week 2.</strong> Fix the disagreements. Most of them will be about your own unclear rules, not the agent&#x27;s reasoning.</p>
+
+<p><strong>Week 3.</strong> Let it run on a schedule and report exceptions only.</p>
+
+<p><strong>Week 4.</strong> Add the second task. Keep the first one running.</p>
+
+<p>Nothing here is dramatic. That is the point — the wins compound quietly, and the failures stay small enough to survive.</p>
+
+<h2>What this looks like in practice</h2>
+
+<p>The reason we built Megsy as a workspace rather than a chat box is exactly this: a task that spans research, files, and a written output should not require you to move between four tools and hold the context yourself.</p>
+
+<p>The agents do the steps. You keep the judgement — and the checks.</p>
+<div class="cta"><h3>One calm place for all your work</h3>
+<p>Megsy is an AI agent workspace: chat, deep research, images, video, slides, browser tasks and coding agents in one place. First month 7 dollars, then 20.</p>
+<a class="btn" href="https://www.megsyai.com">Try Megsy free &rarr;</a></div></article>
+<footer><div class="wrap">&copy; 2026 Megsy &middot; <a href="https://www.megsyai.com">megsyai.com</a> &middot; <a href="../feed.xml">RSS</a> &middot; <a href="../sitemap.xml">Sitemap</a></div></footer>
+</body></html>

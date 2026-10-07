@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://elgiza2.github.io/megsy-blog/sitemap.xml

@@ -1,0 +1,124 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI agent vs AI assistant: what actually changes for your work — Megsy</title>
+<meta name="description" content="The difference is not the model. It is who owns the steps. A practical breakdown of where assistants stop and agents begin, and how to choose.">
+<link rel="canonical" href="https://elgiza2.github.io/megsy-blog/posts/ai-agent-vs-ai-assistant.html">
+<meta property="og:type" content="article"><meta property="og:title" content="AI agent vs AI assistant: what actually changes for your work — Megsy">
+<meta property="og:description" content="The difference is not the model. It is who owns the steps. A practical breakdown of where assistants stop and agents begin, and how to choose."><meta property="og:url" content="https://elgiza2.github.io/megsy-blog/posts/ai-agent-vs-ai-assistant.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI agent vs AI assistant: what actually changes for your work — Megsy"><meta name="twitter:description" content="The difference is not the model. It is who owns the steps. A practical breakdown of where assistants stop and agents begin, and how to choose.">
+<link rel="alternate" type="application/rss+xml" title="Megsy Blog" href="https://elgiza2.github.io/megsy-blog/feed.xml">
+<link rel='preconnect' href='https://fonts.googleapis.com'><link rel='preconnect' href='https://fonts.gstatic.com' crossorigin><link href='https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;600;700&display=swap' rel='stylesheet'><style>
+:root{--blue:#2D6CFF;--sky:#7EB6EE;--ink:#0A0A0A;--parch:#F7F9FC;--gold:#E0B25A;--slate:#6B7A90;--line:#E4EAF2}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--ink);color:var(--parch);font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--sky);text-decoration:none}a:hover{color:var(--blue)}
+.wrap{max-width:760px;margin:0 auto;padding:0 24px}
+header.site{border-bottom:1px solid #1c1c1f;padding:22px 0;position:sticky;top:0;background:rgba(10,10,10,.92);backdrop-filter:blur(10px);z-index:9}
+header.site .wrap{display:flex;align-items:center;gap:12px}
+.logo{width:11px;height:11px;border-radius:50%;background:var(--blue);box-shadow:0 0 22px rgba(45,108,255,.85)}
+.brand{font-family:'Instrument Serif',Georgia,serif;font-size:23px;letter-spacing:.01em}
+.brand span{color:var(--slate);font-size:14px;font-family:Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;margin-left:10px}
+header.site nav{margin-left:auto;font-size:14px}
+.hero{padding:72px 0 40px}
+.hero h1{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(38px,6vw,60px);line-height:1.05;font-weight:400;letter-spacing:-.015em}
+.hero p{color:#9FB0C6;font-size:19px;margin-top:18px;max-width:600px}
+.tagline{display:inline-block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(224,178,90,.45);border-radius:100px;padding:6px 16px;margin-bottom:22px}
+ul.posts{list-style:none;padding-bottom:80px}
+ul.posts li{border-top:1px solid #1c1c1f;padding:30px 0}
+ul.posts time{font-size:13px;color:var(--slate);letter-spacing:.05em}
+ul.posts h2{font-family:'Instrument Serif',Georgia,serif;font-size:30px;font-weight:400;margin:8px 0 10px;line-height:1.2}
+ul.posts h2 a{color:var(--parch)}ul.posts h2 a:hover{color:var(--sky)}
+ul.posts p{color:#9FB0C6;font-size:16px}
+article{padding:60px 0 90px}
+article h1{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(34px,5.2vw,50px);line-height:1.1;font-weight:400;margin-bottom:14px}
+article .meta{color:var(--slate);font-size:14px;margin-bottom:36px}
+article h2{font-family:'Instrument Serif',Georgia,serif;font-size:29px;font-weight:400;margin:44px 0 14px}
+article h3{font-size:20px;margin:32px 0 10px}
+article p{margin:16px 0;font-size:18px;color:#E7EDF5}
+article ul,article ol{margin:16px 0 16px 26px;color:#E7EDF5;font-size:18px}
+article li{margin:8px 0}
+article blockquote{border-left:3px solid var(--blue);padding:6px 0 6px 20px;margin:24px 0;color:#9FB0C6;font-style:italic}
+article code{background:#161616;border:1px solid #232323;border-radius:5px;padding:2px 6px;font-size:15px}
+article pre{background:#121212;border:1px solid #232323;border-radius:12px;padding:18px;overflow:auto;margin:22px 0}
+article pre code{border:0;padding:0}
+article strong{color:#fff}
+article hr{border:0;border-top:1px solid #1c1c1f;margin:40px 0}
+.cta{margin:52px 0 0;padding:32px;border:1px solid rgba(45,108,255,.35);border-radius:18px;background:linear-gradient(160deg,rgba(45,108,255,.12),rgba(10,10,10,0))}
+.cta h3{font-family:'Instrument Serif',Georgia,serif;font-size:26px;font-weight:400;margin:0 0 10px}
+.cta p{color:#9FB0C6;margin:0 0 18px}
+.btn{display:inline-block;background:var(--blue);color:#fff;padding:12px 24px;border-radius:100px;font-weight:600;font-size:15px}
+.btn:hover{background:#4a80ff;color:#fff}
+footer{border-top:1px solid #1c1c1f;padding:34px 0;color:var(--slate);font-size:14px}
+footer a{color:var(--slate)}
+@media(max-width:600px){.hero{padding:48px 0 24px}article{padding:36px 0 60px}}
+</style></head><body>
+<header class="site"><div class="wrap"><span class="logo"></span>
+<a class="brand" href="../index.html">Megsy<span>Blog</span></a>
+<nav><a href="https://www.megsyai.com">megsyai.com &rarr;</a></nav></div></header>
+<article class="wrap"><h1>AI agent vs AI assistant: what actually changes for your work</h1>
+<div class="meta">2026-10-08 &middot; AI agents, comparison, workflows</div>
+<p>Every week a new product is described as an agent. Most of them are assistants with a better interface. The confusion is not accidental — the word &quot;agent&quot; sells better — but it makes it hard to choose anything.</p>
+
+<p>Here is the practical line between the two.</p>
+
+<h2>An assistant answers. An agent completes.</h2>
+
+<p>An assistant is an interface to a model. You bring the context, you bring the task, and you carry the result away to do the rest yourself. The assistant is reactive by design.</p>
+
+<p>An agent owns the middle of the task: the steps between &quot;here is the goal&quot; and &quot;here is the outcome.&quot;</p>
+
+<p>That single difference produces most of the others.</p>
+
+<p>| | Assistant | Agent |</p>
+<p>|---|---|---|</p>
+<p>| Input | A prompt | A goal |</p>
+<p>| Work | Produces text | Takes actions |</p>
+<p>| Context | Per conversation | Persistent |</p>
+<p>| Failure mode | Says &quot;I don&#x27;t know&quot; | Produces a confident wrong result |</p>
+<p>| Your job | Do the steps | Check the outcome |</p>
+
+<h2>Why &quot;it&#x27;s just a wrapper&quot; misses the point</h2>
+
+<p>People dismiss agents as prompt wrappers around the same models. That criticism is fair for many products, but it confuses the model with the system.</p>
+
+<p>The value is not in the model&#x27;s IQ. It is in everything around it: memory that survives sessions, tools that touch real systems, retries when a step fails, and evaluation that catches drift before your customers do. Two products using the same model can behave completely differently, because the system is the product.</p>
+
+<h2>The test that separates them in five minutes</h2>
+
+<p>Give the product a task with <strong>more than one step</strong> and <strong>a verifiable outcome</strong>.</p>
+
+<p>For example: <em>find every mention of our brand from last week, group them by sentiment, and give me the three that need a reply.</em></p>
+
+<p>An assistant will ask you to paste the mentions. An agent will go and get them.</p>
+
+<p>Then ask a follow-up that depends on the first answer. If the product lost the context, it is a chat tool wearing an agent&#x27;s clothes.</p>
+
+<h2>The cost nobody mentions</h2>
+
+<p>Agents are less predictable than assistants. A chat tool that fails wastes a minute. An agent that fails can send an email, change a file, or publish something.</p>
+
+<p>This is not a reason to avoid agents. It is a reason to demand three things from any agent you adopt:</p>
+
+<p>1. <strong>Visible steps.</strong> You should be able to see what it did, not just what it concluded.</p>
+<p>2. <strong>Reversibility.</strong> Anything it changes should be undoable.</p>
+<p>3. <strong>Scoped access.</strong> It should touch the minimum it needs, not everything you own.</p>
+
+<p>If a product cannot show you those three, you are not buying an agent. You are buying risk with a nice landing page.</p>
+
+<h2>When an assistant is the right answer</h2>
+
+<p>Often, honestly. If your task is &quot;explain this&quot;, &quot;rewrite this&quot;, or &quot;brainstorm this&quot;, an assistant is cheaper, faster, and easier to control.</p>
+
+<p>Reach for an agent when the task has <strong>steps</strong>, <strong>repetition</strong>, and a <strong>checkable result</strong>. That is where the time savings are real rather than theoretical.</p>
+
+<h2>The practical takeaway</h2>
+
+<p>Stop asking which product is smarter. Ask which one owns the steps, what it can touch, and how you would notice if it went wrong.</p>
+
+<p>The tools that answer those three questions honestly are the ones worth keeping.</p>
+<div class="cta"><h3>One calm place for all your work</h3>
+<p>Megsy is an AI agent workspace: chat, deep research, images, video, slides, browser tasks and coding agents in one place. First month 7 dollars, then 20.</p>
+<a class="btn" href="https://www.megsyai.com">Try Megsy free &rarr;</a></div></article>
+<footer><div class="wrap">&copy; 2026 Megsy &middot; <a href="https://www.megsyai.com">megsyai.com</a> &middot; <a href="../feed.xml">RSS</a> &middot; <a href="../sitemap.xml">Sitemap</a></div></footer>
+</body></html>
