@@ -1,4 +1,5 @@
 ---
+image: cover-busywork.jpg
 title: How to cut busywork with AI agents without losing control
 date: 2026-10-09
 description: A practical method for choosing what to hand to an agent, what to keep, and how to set boundaries that stop quiet failures before they reach a customer.

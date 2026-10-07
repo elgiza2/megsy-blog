@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Megsy Blog — static site generator (Markdown -> HTML, brand-styled, SEO-ready)."""
-import os, re, glob, html, datetime, json
-
+"""Megsy Blog — static site generator (Markdown -> HTML, brand-styled, SEO + image ready)."""
+import os, re, glob, html, datetime, shutil, json
 ROOT = os.path.dirname(os.path.abspath(__file__))
 CONTENT = os.path.join(ROOT, "content")
 OUT = os.path.join(ROOT, "public")
-SITE = "https://elgiza2.github.io/megsy-blog"
+ASSETS = os.path.join(ROOT, "assets")
+SITE = "https://megsy-blog.surge.sh"
 BRAND = "Megsy"
 
 CSS = """
@@ -30,6 +30,7 @@ ul.posts time{font-size:13px;color:var(--slate);letter-spacing:.05em}
 ul.posts h2{font-family:'Instrument Serif',Georgia,serif;font-size:30px;font-weight:400;margin:8px 0 10px;line-height:1.2}
 ul.posts h2 a{color:var(--parch)}ul.posts h2 a:hover{color:var(--sky)}
 ul.posts p{color:#9FB0C6;font-size:16px}
+.postthumb{display:block;width:100%;height:auto;border-radius:14px;margin:18px 0 4px;border:1px solid #1c1c1f}
 article{padding:60px 0 90px}
 article h1{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(34px,5.2vw,50px);line-height:1.1;font-weight:400;margin-bottom:14px}
 article .meta{color:var(--slate);font-size:14px;margin-bottom:36px}
@@ -44,6 +45,9 @@ article pre{background:#121212;border:1px solid #232323;border-radius:12px;paddi
 article pre code{border:0;padding:0}
 article strong{color:#fff}
 article hr{border:0;border-top:1px solid #1c1c1f;margin:40px 0}
+figure{margin:30px 0}
+figure img{width:100%;height:auto;border-radius:16px;border:1px solid #1c1c1f;display:block}
+figure figcaption{color:var(--slate);font-size:14px;margin-top:10px;text-align:center}
 .cta{margin:52px 0 0;padding:32px;border:1px solid rgba(45,108,255,.35);border-radius:18px;background:linear-gradient(160deg,rgba(45,108,255,.12),rgba(10,10,10,0))}
 .cta h3{font-family:'Instrument Serif',Georgia,serif;font-size:26px;font-weight:400;margin:0 0 10px}
 .cta p{color:#9FB0C6;margin:0 0 18px}
@@ -59,7 +63,7 @@ FONTS = ("<link rel='preconnect' href='https://fonts.googleapis.com'>"
          "<link href='https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;600;700&display=swap' rel='stylesheet'>")
 
 CTA = """<div class="cta"><h3>One calm place for all your work</h3>
-<p>Megsy is an AI agent workspace: chat, deep research, images, video, slides, browser tasks and coding agents in one place. First month 7 dollars, then 20.</p>
+<p>Megsy is an AI agent workspace: chat, deep research, images, video, slides, browser tasks and coding agents in one place.</p>
 <a class="btn" href="https://www.megsyai.com">Try Megsy free &rarr;</a></div>"""
 
 
@@ -74,7 +78,8 @@ def parse(path):
                 meta[k.strip()] = v.strip().strip('"')
         body = m.group(2)
     meta["_body"] = body.strip()
-    meta.setdefault("slug", os.path.basename(path)[:-3])
+    _base = os.path.basename(path)[:-3]
+    meta.setdefault("slug", re.sub(r"^\d{4}-\d{2}-\d{2}-", "", _base))
     meta.setdefault("date", datetime.date.today().isoformat())
     return meta
 
@@ -94,6 +99,10 @@ def md_to_html(md):
             out.append("")
             continue
         esc = html.escape(line)
+        # images: ![alt](url)
+        esc = re.sub(r"!\[(.+?)\]\((https?://[^\s)]+)\)",
+                     r'</p><figure><img src="\2" alt="\1" loading="lazy" decoding="async">'
+                     r'<figcaption>\1</figcaption></figure><p>', esc)
         esc = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", esc)
         esc = re.sub(r"\*(.+?)\*", r"<em>\1</em>", esc)
         esc = re.sub(r"\[(.+?)\]\((https?://[^\s)]+)\)", r'<a href="\2">\1</a>', esc)
@@ -114,10 +123,15 @@ def md_to_html(md):
             out.append("<p>" + esc + "</p>")
     html_out = "\n".join(out)
     html_out = re.sub(r"(<li>.*?</li>\n?)+", lambda m: "<ul>" + m.group(0) + "</ul>", html_out, flags=re.S)
+    html_out = html_out.replace("<p></p>", "").replace("<p><figure>", "<figure>")
     return html_out
 
 
-def page(title, desc, body, canonical, base="", extra_head=""):
+def page(title, desc, body, canonical, base="", og_image="", extra_head=""):
+    img_meta = ""
+    if og_image:
+        img_meta = (f'<meta property="og:image" content="{og_image}">'
+                    f'<meta name="twitter:image" content="{og_image}">')
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{html.escape(title)}</title>
@@ -125,9 +139,13 @@ def page(title, desc, body, canonical, base="", extra_head=""):
 <link rel="canonical" href="{canonical}">
 <meta property="og:type" content="article"><meta property="og:title" content="{html.escape(title)}">
 <meta property="og:description" content="{html.escape(desc)}"><meta property="og:url" content="{canonical}">
+<meta property="og:site_name" content="{BRAND}">
+{img_meta}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{html.escape(title)}"><meta name="twitter:description" content="{html.escape(desc)}">
+<meta name="author" content="{BRAND}">
 <link rel="alternate" type="application/rss+xml" title="{BRAND} Blog" href="{SITE}/feed.xml">
+<script type="application/ld+json">{{"@context":"https://schema.org","@type":"BlogPosting","headline":{json.dumps(title)},"description":{json.dumps(desc)},"author":{{"@type":"Organization","name":"{BRAND}","url":"https://www.megsyai.com"}},"mainEntityOfPage":{json.dumps(canonical)}{',"image":' + json.dumps(og_image) if og_image else ''}}}</script>
 {FONTS}<style>{CSS}</style>{extra_head}</head><body>
 <header class="site"><div class="wrap"><span class="logo"></span>
 <a class="brand" href="{base}index.html">{BRAND}<span>Blog</span></a>
@@ -141,19 +159,32 @@ def main():
     posts = sorted([parse(p) for p in glob.glob(os.path.join(CONTENT, "*.md"))],
                    key=lambda p: p["date"], reverse=True)
     os.makedirs(os.path.join(OUT, "posts"), exist_ok=True)
+    img_out = os.path.join(OUT, "images")
+    os.makedirs(img_out, exist_ok=True)
+    if os.path.isdir(ASSETS):
+        for f in glob.glob(os.path.join(ASSETS, "*")):
+            if os.path.isfile(f):
+                shutil.copy2(f, img_out)
 
     items = []
     for p in posts:
         url = f"{SITE}/posts/{p['slug']}.html"
+        og = f"{SITE}/images/{p['image']}" if p.get("image") else f"{SITE}/images/og-megsy.jpg"
+        hero = (f'<img class="postthumb" src="../images/{p["image"]}" alt="{html.escape(p.get("title",""))}" '
+                f'loading="eager" decoding="async">') if p.get("image") else ""
         art = f"""<article class="wrap"><h1>{html.escape(p.get('title',''))}</h1>
 <div class="meta">{p['date']} &middot; {html.escape(p.get('tags',''))}</div>
+{hero}
 {md_to_html(p['_body'])}
 {CTA}</article>"""
         open(os.path.join(OUT, "posts", p["slug"] + ".html"), "w", encoding="utf-8").write(
-            page(f"{p.get('title','')} — {BRAND}", p.get("description", ""), art, url, base="../"))
+            page(f"{p.get('title','')} — {BRAND}", p.get("description", ""), art, url,
+                 base="../", og_image=og))
+        thumb = (f'<a href="posts/{p["slug"]}.html"><img class="postthumb" src="images/{p["image"]}" '
+                 f'alt="{html.escape(p.get("title",""))}" loading="lazy" decoding="async"></a>') if p.get("image") else ""
         items.append(f"""<li><time>{p['date']}</time>
 <h2><a href="posts/{p['slug']}.html">{html.escape(p.get('title',''))}</a></h2>
-<p>{html.escape(p.get('description',''))}</p></li>""")
+<p>{html.escape(p.get('description',''))}</p>{thumb}</li>""")
 
     home = f"""<section class="hero"><div class="wrap"><span class="tagline">AI agents &amp; the future of work</span>
 <h1>Notes on building an AI workspace that actually does the work.</h1>
@@ -162,7 +193,7 @@ def main():
     open(os.path.join(OUT, "index.html"), "w", encoding="utf-8").write(
         page(f"{BRAND} Blog — AI agents and the future of work",
              "Daily writing on AI agents, automation and building products, from the team behind Megsy.",
-             home, SITE + "/"))
+             home, SITE + "/", og_image=f"{SITE}/images/og-megsy.jpg"))
 
     urls = [f"<url><loc>{SITE}/</loc></url>"] + [
         f"<url><loc>{SITE}/posts/{p['slug']}.html</loc><lastmod>{p['date']}</lastmod></url>" for p in posts]
@@ -179,7 +210,7 @@ def main():
         f'<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>{BRAND} Blog</title>'
         f"<link>{SITE}</link><description>Daily writing on AI agents and automation.</description>{rss}</channel></rss>")
     open(os.path.join(OUT, ".nojekyll"), "w").write("")
-    print(f"built {len(posts)} posts -> {OUT}")
+    print(f"built {len(posts)} posts -> {OUT} (images: {len(os.listdir(img_out))})")
 
 
 if __name__ == "__main__":
