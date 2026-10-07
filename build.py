@@ -78,7 +78,8 @@ def parse(path):
                 meta[k.strip()] = v.strip().strip('"')
         body = m.group(2)
     meta["_body"] = body.strip()
-    meta.setdefault("slug", os.path.basename(path)[:-3])
+    _base = os.path.basename(path)[:-3]
+    meta.setdefault("slug", re.sub(r"^\d{4}-\d{2}-\d{2}-", "", _base))
     meta.setdefault("date", datetime.date.today().isoformat())
     return meta
 
